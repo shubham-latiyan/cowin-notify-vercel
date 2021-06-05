@@ -2,14 +2,21 @@
 require("dotenv").config();
 const fastify = require("fastify");
 const controller = require("../controllers");
+let clearTime;
 
 function build() {
   const app = fastify({
     logger: true,
   });
 
+  controller.run();
+
+  startCowinApp();
+  // }, 840000);
+
   app.get("/", async (req, rep) => {
-    controller.run();
+    clearInterval(clearTime);
+    startCowinApp();
     return { message: "Server is up..." };
   });
 
@@ -35,3 +42,9 @@ function build() {
 }
 
 module.exports = build;
+
+function startCowinApp() {
+  clearTime = setInterval(() => {
+    controller.run();
+  }, 10000);
+}
