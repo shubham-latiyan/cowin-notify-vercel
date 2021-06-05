@@ -2,20 +2,14 @@
 require("dotenv").config();
 const fastify = require("fastify");
 const controller = require("../controllers");
-let clearTime;
+const CronJob = require("cron").CronJob;
 
 function build() {
   const app = fastify({
     logger: true,
   });
 
-  controller.run();
-
-  startCowinApp();
-  // }, 840000);
-
   app.get("/", async (req, rep) => {
-    clearInterval(clearTime);
     startCowinApp();
     return { message: "Server is up..." };
   });
@@ -44,7 +38,10 @@ function build() {
 module.exports = build;
 
 function startCowinApp() {
-  clearTime = setInterval(() => {
+  const job = new CronJob("0 */1 * * * *", function () {
+    const d = new Date();
+    console.log("Every fifth Minute:", d);
     controller.run();
-  }, 10000);
+  });
+  job.start();
 }
