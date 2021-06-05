@@ -1,0 +1,23 @@
+{
+  "name": "news-be",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "now start": "node index.js",
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": "14.x"
+  },
+  "keywords": [],
+  "author": "Shubham Latiyan",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "fastify": "^3.3.0",
+    "fastify-cors": "^4.1.0",
+    "node-fetch": "^2.6.1",
+    "node-mailjet": "^3.3.4"
+  }
+}
