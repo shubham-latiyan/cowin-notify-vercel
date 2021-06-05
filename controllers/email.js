@@ -9,7 +9,7 @@ const mailjet = require("node-mailjet").connect(
         {
           From: {
             Email: "shubham.latiyan@plus91.in",
-            Name: "Cowin Appointments",
+            Name: "Cowin Appointments", 
           },
           To: [
             {
