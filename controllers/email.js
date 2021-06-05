@@ -4,6 +4,9 @@ const mailjet = require("node-mailjet").connect(
   );
   
   const sendEmail = (total_appointments, cowin_text_template) => {
+    console.log('🚀 ~ sendEmail ~ total_appointments', total_appointments);
+    console.log('🚀 ~ sendEmail ~ cowin_text_template', cowin_text_template);
+
     const request = mailjet.post("send", { version: "v3.1" }).request({
       Messages: [
         {
@@ -32,7 +35,7 @@ const mailjet = require("node-mailjet").connect(
         console.log(result.body);
       })
       .catch((err) => {
-        console.log(err.statusCode);
+        console.log("EMAIL SEND ERROR", err);
       });
   };
   
