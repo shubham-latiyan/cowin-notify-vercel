@@ -2,7 +2,6 @@
 require("dotenv").config();
 const fastify = require("fastify");
 const controller = require("../controllers");
-const cron = require('node-cron');
 
 function build() {
   const app = fastify({
@@ -10,7 +9,7 @@ function build() {
   });
 
   app.get("/", async (req, rep) => {
-    startCowinApp();
+    controller.run();
     return { message: "Server is up..." };
   });
 
@@ -36,11 +35,3 @@ function build() {
 }
 
 module.exports = build;
-
-function startCowinApp() {
-  cron.schedule('* * * * *', () => {
-    const d = new Date();
-    console.log("Every fifth Minute:", d);
-    controller.run();
-  });
-}
