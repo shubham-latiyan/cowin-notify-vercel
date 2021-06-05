@@ -15,18 +15,15 @@ function build() {
   // }, 840000);
 
   app.get("/", async (req, rep) => {
-    clearInterval(clearTime);
     startCowinApp();
     return { message: "Server is up..." };
   });
 
   process.on("SIGINT", () => {
-    clearInterval(clearTime);
     process.exit(1);
   });
 
   process.on("exit", () => {
-    clearInterval(clearTime);
   });
 
   process
@@ -44,7 +41,7 @@ function build() {
 module.exports = build;
 
 function startCowinApp() {
-  clearTime = setInterval(() => {
+  clearTime = setTimeout(() => {
     controller.run();
-  }, 10000);
+  }, 2000);
 }
