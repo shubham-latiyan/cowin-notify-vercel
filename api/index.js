@@ -43,5 +43,4 @@ function startCowinApp() {
     console.log("Every fifth Minute:", d);
     controller.run();
   });
-  job.start();
 }
