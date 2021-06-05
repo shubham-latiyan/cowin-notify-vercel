@@ -1,42 +1,44 @@
-const sendEmail = (total_appointments, cowin_text_template) => {
+const sendEmail = async(total_appointments, cowin_text_template) => {
   console.log("🚀 ~ sendEmail ~ total_appointments", total_appointments);
-  console.log("🚀 ~ sendEmail ~ cowin_text_template", cowin_text_template);
-
-  const mailjet = require("node-mailjet").connect(
-    process.env.MJ_APIKEY_PUBLIC,
-    process.env.MJ_APIKEY_PRIVATE
-  );
-
-  const request = mailjet.post("send", { version: "v3.1" }).request({
-    Messages: [
-      {
-        From: {
-          Email: "shubham.latiyan@plus91.in",
-          Name: "Cowin Appointments",
-        },
-        To: [
-          {
-            Email: "shubhamlatiyan46@gmail.com",
-            Name: "Shubham Latiyan",
+  return new Promise((resolve, reject)=>{
+    const mailjet = require("node-mailjet").connect(
+      process.env.MJ_APIKEY_PUBLIC,
+      process.env.MJ_APIKEY_PRIVATE
+    );
+  
+    const request = mailjet.post("send", { version: "v3.1" }).request({
+      Messages: [
+        {
+          From: {
+            Email: "shubham.latiyan@plus91.in",
+            Name: "Cowin Appointments",
           },
-        ],
-        TemplateID: 2939101,
-        TemplateLanguage: true,
-        Subject: "🚀 Available Cowin Appointments",
-        Variables: {
-          total_appointments,
-          cowin_text_template,
+          To: [
+            {
+              Email: "shubhamlatiyan46@gmail.com",
+              Name: "Shubham Latiyan",
+            },
+          ],
+          TemplateID: 2939101,
+          TemplateLanguage: true,
+          Subject: "🚀 Available Cowin Appointments",
+          Variables: {
+            total_appointments,
+            cowin_text_template,
+          },
         },
-      },
-    ],
-  });
-  request
-    .then((result) => {
-      console.log(result.body);
-    })
-    .catch((err) => {
-      console.log("EMAIL SEND ERROR", err);
+      ],
     });
+    request
+      .then((result) => {
+        console.log(result.body);
+        resolve();
+      })
+      .catch((err) => {
+        console.log("EMAIL SEND ERROR", err);
+        reject();
+      });
+  })
 };
 
 module.exports = { sendEmail };
